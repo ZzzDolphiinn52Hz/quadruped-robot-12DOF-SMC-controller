@@ -1,0 +1,8 @@
+null :=
+space := $(null) $(null)
+WEBOTS_HOME_PATH?=$(subst $(space),\ ,$(strip $(subst \,/,$(WEBOTS_HOME))))
+
+C_SOURCES = SMC_12DOF.c
+CFLAGS = -Wno-unused-result
+
+include $(WEBOTS_HOME_PATH)/resources/Makefile.include
