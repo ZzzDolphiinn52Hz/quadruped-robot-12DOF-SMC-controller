@@ -47,6 +47,13 @@ Mở **Terminal số 2** trên Ubuntu, giữ nguyên Terminal 1 đang chạy Bri
 source /opt/ros/humble/setup.bash
 ```
 
+echo "MODE:1" | nc -u 127.0.0.1 5556
+
+echo "MODE:4" | nc -u 127.0.0.1 5556
+
+echo "MODE:6" | nc -u 127.0.0.1 5556
+
+
 **Các câu lệnh điều khiển (Copy/Paste vào Terminal 2):**
 
 *👉 **Mode 4 (Trot - Đi nước kiệu tới trước):***

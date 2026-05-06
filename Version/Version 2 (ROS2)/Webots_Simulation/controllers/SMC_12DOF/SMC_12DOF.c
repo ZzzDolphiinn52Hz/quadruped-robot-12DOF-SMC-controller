@@ -63,8 +63,15 @@ int main(int argc, char **argv) {
     int udp_sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
     struct sockaddr_in dest;
     dest.sin_family = AF_INET;
-    dest.sin_port = htons(5555);
+    dest.sin_port = htons(5555);       // SMC Dashboard (smc_dashboard.m)
     dest.sin_addr.s_addr = inet_addr("127.0.0.1");
+
+    // Socket thứ 2 cho Kinematic Dashboard (realtime_dashboard.m)
+    int udp_sock2 = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+    struct sockaddr_in dest2;
+    dest2.sin_family = AF_INET;
+    dest2.sin_port = htons(5557);      // Kinematic Dashboard
+    dest2.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     // Khởi tạo hệ thống nhận UDP (Nhận lệnh từ ROS2)
     int udp_recv_sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
@@ -95,7 +102,7 @@ int main(int argc, char **argv) {
             // ROS2 gửi lệnh dạng: "MODE:4"
             if (strncmp(recv_buf, "MODE:", 5) == 0) {
                 int new_mode = atoi(&recv_buf[5]);
-                if (new_mode >= 1 && new_mode <= 8) {
+                if (new_mode >= 1 && new_mode <= 10) {
                     current_mode = new_mode;
                 }
             }
@@ -175,31 +182,112 @@ int main(int argc, char **argv) {
                 else { zd[i] = z_offset; contact[i] = 1; }
             }
         }
-        else if (current_mode == 7) { // SIDE SWAY (Lắc người nghiêng trái phải - Roll)
-            double f = 1.0, Az = 0.04; 
+        else if (current_mode == 7) { // BODY ROLL SWAY (Lắc thân - Yaw + Z phối hợp)
+            double f = 0.8, Az = 0.03, Ayaw = 0.15;
+            double phase = sin(2 * PI * f * t);
             for (int i = 0; i < 4; i++) {
                 xd[i] = 0;
-                q0d[i] = 0;
-                // Chân trái (0, 2) nhún lên/xuống ngược pha với Chân phải (1, 3)
-                if (i == 0 || i == 2) { // FL, RL
-                    zd[i] = z_offset + Az * sin(2 * PI * f * t);
-                } else { // FR, RR
-                    zd[i] = z_offset - Az * sin(2 * PI * f * t);
+                if (i == 0 || i == 2) { // FL, RL (chân trái)
+                    zd[i] = z_offset + Az * phase;
+                    q0d[i] = Ayaw * phase;   // Yaw ra ngoài khi nhún lên
+                } else {                      // FR, RR (chân phải)
+                    zd[i] = z_offset - Az * phase;
+                    q0d[i] = -Ayaw * phase;  // Yaw ra ngoài khi nhún lên
                 }
-                contact[i] = 1; // 4 chân luôn chạm đất để ép thân nghiêng
+                contact[i] = 1; // 4 chân luôn chạm đất
             }
         }
-        else if (current_mode == 8) { // CRAB WALK (Đi bò ngang như cua)
-            double f = 1.0, Ayaw = 0.1, Az = 0.03;
-            double phi_phase[4] = {0, PI, PI, 0}; // Nhấc chân chéo như Trot
+        else if (current_mode == 8) { // LATERAL TROT (Đi ngang kiểu Trot - Crab Walk V2)
+            double f = 0.8, Ayaw = 0.18, Az = 0.03;
+            double phi_phase[4] = {0, PI, PI, 0}; // Trot pattern (chéo nhau)
             for (int i = 0; i < 4; i++) {
                 double p = 2 * PI * f * t + phi_phase[i];
-                // Swing sang phải, đạp sang trái (hoặc ngược lại) đồng bộ cho 4 chân
-                q0d[i] = -Ayaw * cos(p); 
-                if (sin(p) > 0) { 
-                    zd[i] = z_offset + Az * sin(p); contact[i] = 0; 
+                // Chân trái đẩy ngược chân phải (đối xứng gương)
+                double yaw_sign = (i == 0 || i == 2) ? 1.0 : -1.0;
+                q0d[i] = yaw_sign * Ayaw * cos(p);
+                if (sin(p) > 0) { // Swing phase
+                    zd[i] = z_offset + Az * sin(p);
+                    contact[i] = 0;
+                } else { // Stance phase
+                    zd[i] = z_offset;
+                    contact[i] = 1;
+                }
+            }
+        }
+        else if (current_mode == 9) { // SPIN IN PLACE (Differential Stepping - Tank Drive)
+            double fp = 0.8;
+            double T = 1.0 / fp;
+            double beta_t = 0.60;
+            double beta_u = 0.60;
+            double step_d = 0.04;    // Chiều dài bước tiến/lùi
+            double step_h = 0.025;   // Chiều cao nhấc chân
+            double Ayaw = 0.12;     // Yaw bổ trợ
+            
+            // Trot pattern: FL+RR đồng pha, FR+RL đồng pha
+            double phase_offset[4] = {0.0, 0.5, 0.5, 0.0};
+            
+            for (int i = 0; i < 4; i++) {
+                double xi = fmod(t / T + phase_offset[i], 1.0);
+                double u = phase_to_u(xi, beta_t, beta_u);
+                
+                double x_bz, z_bz;
+                get_bezier_point(u, step_d, step_h, &x_bz, &z_bz);
+                
+                // TANK DRIVE: Chân trái (FL=0, RL=2) bước tới
+                //             Chân phải (FR=1, RR=3) bước lùi
+                // → Giống bánh xích tank: trái tiến + phải lùi = xoay tại chỗ
+                double x_sign = (i == 0 || i == 2) ? 1.0 : -1.0;
+                xd[i] = x_sign * x_bz;
+                zd[i] = z_offset + z_bz;
+                
+                // Yaw bổ trợ: tăng cường moment xoay
+                q0d[i] = Ayaw * cos(PI * u);
+                
+                // Contact detection
+                double u_stance_start = (1.0 - beta_u) / 2.0;
+                double u_stance_end = (1.0 + beta_u) / 2.0;
+                if (u >= u_stance_start && u <= u_stance_end) {
+                    contact[i] = 1;
                 } else {
-                    zd[i] = z_offset; contact[i] = 1; 
+                    contact[i] = 0;
+                }
+            }
+        }
+        else if (current_mode == 10) { // GREETING (Chó ngồi chào - Showcase 12-DOF)
+            double wave_f = 1.5; // Tần số vẫy (Hz)
+            double wave_t = 2 * PI * wave_f * t;
+            
+            for (int i = 0; i < 4; i++) {
+                if (i == 0 || i == 1) { 
+                    // ── FL, FR: NGỒI XUỐNG (phần mông) ──
+                    xd[i] = 0.06;
+                    zd[i] = -0.12;     // Co chân → hạ mông
+                    q0d[i] = 0.0;
+                    contact[i] = 1;
+                }
+                else if (i == 3) { 
+                    // ── RR: CHÂN CHỐNG ĐỠ ──
+                    xd[i] = 0.0;
+                    zd[i] = z_offset;  // -0.22 (đứng chuẩn)
+                    q0d[i] = 0.0;
+                    contact[i] = 1;
+                }
+                else { 
+                    // ── RL (i==2): VẪY TAY CHÀO ──
+                    // Dơ chân THẲNG + CAO hết cỡ
+                    
+                    // DOF 1 - YAW: Vẫy trái/phải
+                    q0d[i] = 0.35 * sin(wave_t);
+                    
+                    // DOF 2 - PITCH: Dướn ra trước (gần ngang = dơ cao nhất trong giới hạn khớp)
+                    // xd âm = hướng trước robot, pitch ≈ -1.37 rad (giới hạn ±1.57)
+                    xd[i] = -0.25 - 0.02 * sin(wave_t);
+                    
+                    // DOF 3 - KNEE: Gần ngang hip (zd≈-0.05 = gần ngang, chân gần thẳng)
+                    // Reach ≈ 0.255m / 0.32m → khá thẳng, vẫy bàn chân tần số x2
+                    zd[i] = -0.05 + 0.03 * sin(2.0 * wave_t);
+                    
+                    contact[i] = 0;
                 }
             }
         }
@@ -207,16 +295,12 @@ int main(int argc, char **argv) {
         for(int i=0; i<4; i++) num_stance += contact[i];
         if (num_stance == 0) num_stance = 4.0; 
 
-        // Bắn UDP Telemetry cho 4 chân về MATLAB
-        static double last_log_time = 0;
-        if (t - last_log_time >= 0.02) { // 50Hz là đủ siêu mượt cho đồ thị
-            char buffer[256];
-            // Format: t, x0, z0, x1, z1, x2, z2, x3, z3
-            sprintf(buffer, "%f,%f,%f,%f,%f,%f,%f,%f,%f", 
-                    t, xd[0], zd[0], xd[1], zd[1], xd[2], zd[2], xd[3], zd[3]);
-            sendto(udp_sock, buffer, strlen(buffer), 0, (struct sockaddr *)&dest, sizeof(dest));
-            last_log_time = t;
-        }
+        // --- Mảng lưu trữ dữ liệu SMC cho telemetry (4 chân × 12 giá trị) ---
+        double tele_q0d[4]={0}, tele_q0[4]={0};   // Yaw: desired, actual
+        double tele_q1d[4]={0}, tele_q1[4]={0};   // Pitch: desired, actual
+        double tele_q2d[4]={0}, tele_q2[4]={0};   // Knee: desired, actual
+        double tele_s0[4]={0}, tele_s1[4]={0}, tele_s2[4]={0};  // Sliding surface
+        double tele_tau1[4]={0}, tele_tau2[4]={0}; // Torque (yaw = position ctrl → không có)
 
         // --- ĐIỀU KHIỂN ĐỘNG LỰC HỌC CHO 4 CHÂN ---
         for (int i = 0; i < 4; i++) {
@@ -298,10 +382,47 @@ int main(int argc, char **argv) {
 
             wb_motor_set_torque(motors[idx_pitch], tau1);
             wb_motor_set_torque(motors[idx_knee], tau2);
+
+            // --- LƯU DỮ LIỆU TELEMETRY CHO CHÂN i ---
+            tele_q0d[i] = q0d[i];  tele_q0[i] = q0;
+            tele_q1d[i] = q1d;     tele_q1[i] = q1;
+            tele_q2d[i] = q2d;     tele_q2[i] = q2;
+            tele_s0[i] = q0d[i] - q0;  // Yaw: sai số vị trí (Position Control)
+            tele_s1[i] = s1;            // Pitch: sliding surface
+            tele_s2[i] = s2;            // Knee: sliding surface
+            tele_tau1[i] = tau1;
+            tele_tau2[i] = tau2;
+        }
+
+        // --- BẮN UDP TELEMETRY ĐẦY ĐỦ CHO MATLAB (50Hz) ---
+        // Format: t, [chân0: q0d,q0,q1d,q1,q2d,q2,s0,s1,s2,tau0,tau1,tau2], [chân1: ...], ...
+        // = 1 + 4×12 = 49 giá trị
+        static double last_log_time = 0;
+        if (t - last_log_time >= 0.02) {
+            char buffer[2048];
+            int offset = sprintf(buffer, "%.4f", t);
+            for (int i = 0; i < 4; i++) {
+                offset += sprintf(buffer + offset, ",%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f",
+                    tele_q0d[i], tele_q0[i],
+                    tele_q1d[i], tele_q1[i],
+                    tele_q2d[i], tele_q2[i],
+                    tele_s0[i], tele_s1[i], tele_s2[i],
+                    0.0,         tele_tau1[i], tele_tau2[i]);
+            }
+            sendto(udp_sock, buffer, strlen(buffer), 0, (struct sockaddr *)&dest, sizeof(dest));
+
+            // Gửi dữ liệu XZ quỹ đạo chân cho Kinematic Dashboard (port 5557)
+            char buf2[256];
+            sprintf(buf2, "%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f,%.4f",
+                    t, xd[0], zd[0], xd[1], zd[1], xd[2], zd[2], xd[3], zd[3]);
+            sendto(udp_sock2, buf2, strlen(buf2), 0, (struct sockaddr *)&dest2, sizeof(dest2));
+
+            last_log_time = t;
         }
     }
     close(udp_recv_sock);
     close(udp_sock);
+    close(udp_sock2);
     wb_robot_cleanup();
     return 0;
 }

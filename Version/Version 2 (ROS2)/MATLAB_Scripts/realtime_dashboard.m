@@ -9,11 +9,11 @@ import java.net.DatagramPacket
 
 % Đảm bảo port 5555 không bị chiếm
 try
-    udp_port = 5555;
+    udp_port = 5557;
     socket = DatagramSocket(udp_port);
     socket.setSoTimeout(20); % Timeout 20ms để vòng lặp không bị kẹt
-catch ME
-    error('Cổng 5555 đang bị chiếm. Hãy khởi động lại MATLAB hoặc đổi port.');
+catch
+    error('Cổng %d đang bị chiếm. Hãy khởi động lại MATLAB hoặc đổi port.', udp_port);
 end
 
 % --- ĐỊNH NGHĨA THEME (SCI-FI DARK MODE) ---
@@ -99,13 +99,24 @@ while ishandle(fig)
     end
     
     if has_data
-        % Tách chuỗi: t, x0, z0, x1, z1, x2, z2, x3, z3
+        % Tách chuỗi CSV
         vals = str2double(split(latest_msg, ','));
         
-        if length(vals) == 9
+        % Hỗ trợ cả format cũ (9 giá trị) và mới (49 giá trị)
+        if length(vals) == 9 || length(vals) == 49
             for i = 1:4
-                x = vals(2 + (i-1)*2);
-                z = vals(3 + (i-1)*2);
+                if length(vals) == 9
+                    x = vals(2 + (i-1)*2);
+                    z = vals(3 + (i-1)*2);
+                else
+                    % Format mới: trích q1d (pitch), q2d (knee) → FK ra x,z
+                    base = 2 + (i-1)*12;
+                    q1d = vals(base + 2);  % q1d (pitch desired)
+                    q2d = vals(base + 4);  % q2d (knee desired)
+                    L1 = 0.16; L2 = 0.16;
+                    x = L1*sin(q1d) + L2*sin(q1d + q2d);
+                    z = -(L1*cos(q1d) + L2*cos(q1d + q2d));
+                end
                 
                 % Cuốn dữ liệu (Ring buffer) để tạo hiệu ứng "đuôi sao chổi"
                 if is_filled

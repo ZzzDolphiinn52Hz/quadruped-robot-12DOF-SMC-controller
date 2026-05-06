@@ -40,13 +40,18 @@ class QuadrupedUDPBridge(Node):
     def cmd_vel_callback(self, msg):
         new_mode = 1 # Chế độ đứng yên (Stand) mặc định
 
+        # === BẢNG MODE ===
+        # 1: Stand  |  2: Squat     |  3: Belly Dance  |  4: Trot Walk
+        # 5: Pace   |  6: Gallop    |  7: Body Roll     |  8: Lateral Trot
+        # 9: Spin   | 10: Wave Dance
+        
         # Phân tích lệnh di chuyển từ ROS2
         if abs(msg.linear.x) > 0.05:
             new_mode = 4  # Trot (Đi thẳng)
         elif abs(msg.linear.y) > 0.05:
-            new_mode = 8  # Crab Walk (Đi ngang)
+            new_mode = 8  # Lateral Trot (Đi ngang)
         elif abs(msg.angular.z) > 0.05:
-            new_mode = 7  # Side Sway (Có thể dùng làm quay đầu sau này)
+            new_mode = 9  # Spin in Place (Quay tại chỗ)
             
         # Luôn gửi UDP để đảm bảo Webots nhận được lệnh ngay cả khi Webots vừa khởi động lại
         cmd_str = f"MODE:{new_mode}"
