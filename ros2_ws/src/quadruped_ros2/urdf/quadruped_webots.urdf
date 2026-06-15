@@ -126,7 +126,7 @@
 
   <ros2_control name="WebotsSystem" type="system">
     <hardware>
-      <plugin>webots_ros2_control/WebotsSystem</plugin>
+      <plugin>webots_ros2_control::Ros2ControlSystem</plugin>
     </hardware>
 
     <joint name="FL_hip_yaw">
