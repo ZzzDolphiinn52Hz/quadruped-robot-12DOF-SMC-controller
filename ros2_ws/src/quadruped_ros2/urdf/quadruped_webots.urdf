@@ -124,24 +124,13 @@
     </plugin>
   </webots>
 
-  <ros2_control name="WebotsSystem" type="system">
+    <ros2_control name="WebotsSystem" type="system">
     <hardware>
       <plugin>webots_ros2_control::Ros2ControlSystem</plugin>
     </hardware>
 
+    <!-- YAW JOINTS: POSITION CONTROL -->
     <joint name="FL_hip_yaw">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
-    <joint name="FL_hip_pitch">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
-    <joint name="FL_knee_pitch">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
@@ -153,31 +142,7 @@
       <state_interface name="velocity"/>
     </joint>
 
-    <joint name="FR_hip_pitch">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
-    <joint name="FR_knee_pitch">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
     <joint name="RL_hip_yaw">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
-    <joint name="RL_hip_pitch">
-      <command_interface name="position"/>
-      <state_interface name="position"/>
-      <state_interface name="velocity"/>
-    </joint>
-
-    <joint name="RL_knee_pitch">
       <command_interface name="position"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
@@ -189,14 +154,52 @@
       <state_interface name="velocity"/>
     </joint>
 
+
+    <!-- PITCH/KNEE JOINTS: EFFORT CONTROL -->
+    <joint name="FL_hip_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FL_knee_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FR_hip_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FR_knee_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RL_hip_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RL_knee_pitch">
+      <command_interface name="effort"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
     <joint name="RR_hip_pitch">
-      <command_interface name="position"/>
+      <command_interface name="effort"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
 
     <joint name="RR_knee_pitch">
-      <command_interface name="position"/>
+      <command_interface name="effort"/>
       <state_interface name="position"/>
       <state_interface name="velocity"/>
     </joint>
