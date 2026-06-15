@@ -43,6 +43,9 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'joint_monitor = quadruped_ros2.joint_monitor:main',
+            'pose_commander = quadruped_ros2.pose_commander:main',
+            'gait_controller = quadruped_ros2.gait_controller:main',
         ],
     },
 )

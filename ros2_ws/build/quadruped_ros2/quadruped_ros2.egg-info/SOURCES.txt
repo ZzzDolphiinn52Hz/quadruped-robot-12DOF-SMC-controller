@@ -4,6 +4,9 @@ setup.py
 config/ros2_controllers.yaml
 launch/quadruped_webots.launch.py
 quadruped_ros2/__init__.py
+quadruped_ros2/gait_controller.py
+quadruped_ros2/joint_monitor.py
+quadruped_ros2/pose_commander.py
 quadruped_ros2.egg-info/PKG-INFO
 quadruped_ros2.egg-info/SOURCES.txt
 quadruped_ros2.egg-info/dependency_links.txt
