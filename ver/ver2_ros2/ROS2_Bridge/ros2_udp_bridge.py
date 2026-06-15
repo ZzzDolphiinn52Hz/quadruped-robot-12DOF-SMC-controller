@@ -11,6 +11,12 @@ class QuadrupedUDPBridge(Node):
     def __init__(self):
         super().__init__('quadruped_udp_bridge')
         
+        # Nếu ROS2 và Webots chạy cùng máy Ubuntu native thì dùng localhost
+        self.webots_ip = '127.0.0.1'
+
+        print(f"--- GỬI UDP TỚI WEBOTS LOCALHOST: {self.webots_ip} ---")
+
+        """
         # Khởi tạo UDP Socket (Lấy IP của Windows Host thay vì 127.0.0.1 do lỗi mạng WSL2 UDP)
         import subprocess
         try:
@@ -20,6 +26,7 @@ class QuadrupedUDPBridge(Node):
             self.webots_ip = '127.0.0.1'
             
         print(f"--- ĐÃ TÌM THẤY IP WINDOWS HOST LÀ: {self.webots_ip} ---")
+        """
             
         self.cmd_port = 5556  # Cổng nhận lệnh của Webots
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
