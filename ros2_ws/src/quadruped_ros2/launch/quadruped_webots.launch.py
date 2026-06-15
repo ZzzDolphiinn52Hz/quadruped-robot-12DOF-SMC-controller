@@ -29,6 +29,8 @@ def generate_launch_description():
         'ros2_controllers.yaml'
     )
 
+    processed_urdf_path = '/tmp/quadruped_webots_processed.urdf'
+
     with open(urdf_path, 'r') as f:
         robot_description = f.read()
 
@@ -37,6 +39,9 @@ def generate_launch_description():
         controller_config
     )
 
+    with open(processed_urdf_path, 'w') as f:
+        f.write(robot_description)
+
     webots = WebotsLauncher(
         world=world_path
     )
@@ -44,7 +49,7 @@ def generate_launch_description():
     webots_controller = WebotsController(
         robot_name='quad_3dof_L123',
         parameters=[
-            {'robot_description': robot_description},
+            {'robot_description': processed_urdf_path},
             controller_config
         ]
     )
@@ -60,16 +65,28 @@ def generate_launch_description():
         output='screen'
     )
 
-    position_controller_spawner = Node(
+    yaw_position_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'position_controller',
+            'yaw_position_controller',
             '--controller-manager',
             '/controller_manager'
         ],
         output='screen'
     )
+
+    leg_effort_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'leg_effort_controller',
+            '--controller-manager',
+            '/controller_manager'
+        ],
+        output='screen'
+    )
+
     main_controller_node = Node(
         package='quadruped_ros2',
         executable='quadruped_main',
@@ -81,6 +98,7 @@ def generate_launch_description():
         webots,
         webots_controller,
         joint_state_broadcaster_spawner,
-        position_controller_spawner,
+        yaw_position_controller_spawner,
+        leg_effort_controller_spawner,
         #main_controller_node
     ])

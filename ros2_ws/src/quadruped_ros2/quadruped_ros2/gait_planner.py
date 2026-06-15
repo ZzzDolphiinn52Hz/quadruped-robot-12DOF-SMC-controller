@@ -22,7 +22,7 @@ class GaitPlanner:
         if abs(vy) > 0.03:
             return MODE_LATERAL
 
-        if abs(vx) > 0.02:
+        if abs(vx) > 0.005:
             return MODE_TROT
 
         return MODE_STAND

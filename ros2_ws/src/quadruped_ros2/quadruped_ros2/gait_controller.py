@@ -157,9 +157,9 @@ class QuadrupedGaitController(Node):
         direction = 1.0 if self.vx >= 0.0 else -1.0
 
         step_length = self.clamp(
-            speed * 0.35,
-            self.min_step_length,
-            self.max_step_length
+            speed * self.config.step_length_gain,
+            self.config.min_step_length,
+            self.config.max_step_length
         )
 
         # Trot gait:

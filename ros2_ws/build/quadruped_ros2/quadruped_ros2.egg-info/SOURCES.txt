@@ -8,6 +8,7 @@ quadruped_ros2/bezier_utils.py
 quadruped_ros2/desired_state.py
 quadruped_ros2/gait_controller.py
 quadruped_ros2/gait_planner.py
+quadruped_ros2/hybrid_command.py
 quadruped_ros2/joint_monitor.py
 quadruped_ros2/joint_state_reader.py
 quadruped_ros2/kinematics.py

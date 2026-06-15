@@ -1,0 +1,34 @@
+[0.539s] Invoking command in '/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2': PYTHONPATH=/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/build --no-deps symlink_data
+[0.729s] running develop
+[0.838s] running egg_info
+[0.838s] creating quadruped_ros2.egg-info
+[0.838s] writing quadruped_ros2.egg-info/PKG-INFO
+[0.838s] writing dependency_links to quadruped_ros2.egg-info/dependency_links.txt
+[0.838s] writing entry points to quadruped_ros2.egg-info/entry_points.txt
+[0.838s] writing requirements to quadruped_ros2.egg-info/requires.txt
+[0.838s] writing top-level names to quadruped_ros2.egg-info/top_level.txt
+[0.838s] writing manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+[0.839s] reading manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+[0.840s] writing manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+[0.841s] running build_ext
+[0.841s] Creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages/quadruped-ros2.egg-link (link to .)
+[0.842s] Installing joint_monitor script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.842s] Installing pose_commander script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.842s] Installing quadruped_main script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.842s] 
+[0.842s] Installed /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2
+[0.842s] running symlink_data
+[0.842s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/ament_index
+[0.842s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/ament_index/resource_index
+[0.842s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/ament_index/resource_index/packages
+[0.842s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/resource/quadruped_ros2 -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/ament_index/resource_index/packages
+[0.842s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/package.xml -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2
+[0.843s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/launch
+[0.843s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/launch/quadruped_webots.launch.py -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/launch
+[0.843s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/config
+[0.843s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/config/ros2_controllers.yaml -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/config
+[0.843s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/worlds
+[0.843s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/worlds/quad_3dof_L1L2L3_4legs.wbt -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/worlds
+[0.843s] creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/urdf
+[0.843s] symbolically linking /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/urdf/quadruped_webots.urdf -> /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/share/quadruped_ros2/urdf
+[0.865s] Invoked command in '/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2' returned '0': PYTHONPATH=/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/build --no-deps symlink_data

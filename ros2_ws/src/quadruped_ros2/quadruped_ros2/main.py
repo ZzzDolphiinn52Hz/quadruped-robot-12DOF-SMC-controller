@@ -11,6 +11,10 @@ from quadruped_ros2.kinematics import build_joint_command
 from quadruped_ros2.joint_state_reader import JointStateReader
 from quadruped_ros2.desired_state import DesiredStateEstimator
 from quadruped_ros2.smc_math import SMCMath
+from quadruped_ros2.hybrid_command import (
+    build_yaw_position_command,
+    build_leg_effort_command,
+)
 
 
 class QuadrupedMainController(Node):
@@ -33,10 +37,17 @@ class QuadrupedMainController(Node):
         self.last_time = self.get_clock().now()
         self.last_cmd_time = self.get_clock().now()
         self.last_log_time = self.get_clock().now()
+        self.start_time = self.get_clock().now()
 
-        self.joint_pub = self.create_publisher(
+        self.yaw_pub = self.create_publisher(
             Float64MultiArray,
-            "/position_controller/commands",
+            "/yaw_position_controller/commands",
+            10
+        )
+
+        self.leg_effort_pub = self.create_publisher(
+            Float64MultiArray,
+            "/leg_effort_controller/commands",
             10
         )
 
@@ -67,13 +78,18 @@ class QuadrupedMainController(Node):
 
         self.get_logger().info("Quadruped main controller started.")
         self.get_logger().info("Subscribe: /cmd_vel")
-        self.get_logger().info("Publish: /position_controller/commands")
+        self.get_logger().info("Publish: /yaw_position_controller/commands")
+        self.get_logger().info("Publish: /leg_effort_controller/commands")
 
     def cmd_vel_callback(self, msg):
         self.vx = msg.linear.x
         self.vy = msg.linear.y
         self.wz = msg.angular.z
         self.last_cmd_time = self.get_clock().now()
+
+        self.get_logger().info(
+            f"Received cmd_vel: vx={self.vx:.3f}, vy={self.vy:.3f}, wz={self.wz:.3f}"
+        )
 
     def control_loop(self):
         now = self.get_clock().now()
@@ -122,13 +138,41 @@ class QuadrupedMainController(Node):
             self.latest_error = e
             self.latest_sliding_surface = s
 
-        msg = Float64MultiArray()
-        msg.data = joint_command
-        self.joint_pub.publish(msg)
+        yaw_command = build_yaw_position_command(qd)
+
+        yaw_msg = Float64MultiArray()
+        yaw_msg.data = yaw_command
+        self.yaw_pub.publish(yaw_msg)
+
+        if self.joint_state_reader.has_state:
+            q = self.joint_state_reader.get_position()
+            dq = self.joint_state_reader.get_velocity()
+
+            leg_effort_command = build_leg_effort_command(
+                qd=qd,
+                dqd=dqd,
+                q=q,
+                dq=dq,
+                config=self.config
+            )
+
+            ramp_time = 1.0
+            elapsed_from_start = (now - self.start_time).nanoseconds * 1e-9
+
+            torque_scale = min(1.0, elapsed_from_start / ramp_time)
+
+            # Không để torque bắt đầu từ 0 quá lâu, tránh robot khuỵu
+            torque_scale = max(0.45, torque_scale)
+
+            leg_effort_command = [
+                torque_scale * tau for tau in leg_effort_command
+            ]
+
+            effort_msg = Float64MultiArray()
+            effort_msg.data = leg_effort_command
+            self.leg_effort_pub.publish(effort_msg)
 
         self.publish_debug()
-
-        self.log_status(now)
 
     def log_status(self, now):
         elapsed = (now - self.last_log_time).nanoseconds * 1e-9
