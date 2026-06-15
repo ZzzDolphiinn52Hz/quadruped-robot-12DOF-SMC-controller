@@ -1,0 +1,17 @@
+running develop
+running egg_info
+writing quadruped_ros2.egg-info/PKG-INFO
+writing dependency_links to quadruped_ros2.egg-info/dependency_links.txt
+writing entry points to quadruped_ros2.egg-info/entry_points.txt
+writing requirements to quadruped_ros2.egg-info/requires.txt
+writing top-level names to quadruped_ros2.egg-info/top_level.txt
+reading manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+writing manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+running build_ext
+Creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages/quadruped-ros2.egg-link (link to .)
+Installing joint_monitor script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+Installing pose_commander script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+Installing quadruped_main script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+
+Installed /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2
+running symlink_data

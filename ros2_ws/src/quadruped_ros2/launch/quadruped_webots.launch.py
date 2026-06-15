@@ -70,10 +70,10 @@ def generate_launch_description():
         ],
         output='screen'
     )
-    gait_controller_node = Node(
+    main_controller_node = Node(
         package='quadruped_ros2',
-        executable='gait_controller',
-        name='gait_controller',
+        executable='quadruped_main',
+        name='quadruped_main_controller',
         output='screen'
     )
 
@@ -82,5 +82,5 @@ def generate_launch_description():
         webots_controller,
         joint_state_broadcaster_spawner,
         position_controller_spawner,
-        gait_controller_node
+        #main_controller_node
     ])
