@@ -1,0 +1,938 @@
+#VRML_SIM R2025a utf8
+
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackground.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/backgrounds/protos/TexturedBackgroundLight.proto"
+EXTERNPROTO "https://raw.githubusercontent.com/cyberbotics/webots/R2025a/projects/objects/floors/protos/RectangleArena.proto"
+
+WorldInfo {
+  basicTimeStep 1
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.32722355449769547 0.5261191402369217 0.7849352811909119 4.162690324512787
+  position -0.7127448606980715 1.8314568176736976 -4.618207467514689
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+Robot {
+  translation -2.5558775668763802 0.2337407585787298 -0.917193760053533
+  rotation 0.12453983032917922 -0.9839346587923289 -0.1279156670967344 0.2874763427214577
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0.9 0.9
+        roughness 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.4 0.08 0.2
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -2.7055932421769323e-07
+        anchor 0.15 -0.02 0.12
+        minStop -0.8
+        maxStop 0.8
+        dampingConstant 0.05
+      }
+      device [
+        RotationalMotor {
+          name "FL_hip_yaw"
+          maxVelocity 5
+          maxTorque 5
+        }
+        PositionSensor {
+          name "FL_hip_yaw_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1499999701008902 -0.02003350738070838 0.11986262914135248
+        rotation -1 0 0 0.13089996445889235
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.2 0
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.025
+            }
+          }
+          Pose {
+            translation 0 0 0.035
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.7 0.2 0.8
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.035 0.035 0.07
+                }
+              }
+            ]
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0.8633667828198305
+              axis 0 0 1
+              anchor 0 0 0.07
+              minStop -1.57
+              maxStop 1.57
+              dampingConstant 0.05
+            }
+            device [
+              RotationalMotor {
+                name "FL_hip_pitch"
+                maxVelocity 5
+                maxTorque 5
+              }
+              PositionSensor {
+                name "FL_hip_pitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 0.07
+              rotation 0 0 1 0.8633667828198304
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.1 0.2 1
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Sphere {
+                    radius 0.022
+                  }
+                }
+                Pose {
+                  translation 0 -0.08 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.6 0.1 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry Box {
+                        size 0.035 0.16 0.035
+                      }
+                    }
+                  ]
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position -1.8004441877641035
+                    axis 0 0 1
+                    anchor 0 -0.16 0
+                    minStop -2.2
+                    maxStop 0.2
+                    dampingConstant 0.05
+                  }
+                  device [
+                    RotationalMotor {
+                      name "FL_knee_pitch"
+                      maxVelocity 5
+                      maxTorque 5
+                    }
+                    PositionSensor {
+                      name "FL_knee_pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 -0.16 0
+                    rotation 0 0 -1 1.8004441877641035
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.1 0.2 1
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Sphere {
+                          radius 0.02
+                        }
+                      }
+                      Pose {
+                        translation 0 -0.08 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0.8 0.7 0.2
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Box {
+                              size 0.03 0.16 0.03
+                            }
+                          }
+                        ]
+                      }
+                      Pose {
+                        translation 0 -0.16 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0 0 0
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Sphere {
+                              radius 0.018
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "FL_L3_shank_link"
+                    boundingObject Pose {
+                      translation 0 -0.08 0
+                      children [
+                        Box {
+                          size 0.03 0.16 0.03
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 0.08
+                      centerOfMass [
+                        0 -0.08 0
+                      ]
+                    }
+                    linearVelocity -0.23595311314169962 -0.14654823040612858 -0.04948509864576418
+                    angularVelocity -0.5488114040719994 0.11563929840396237 1.1412212091832759
+                  }
+                }
+              ]
+              name "FL_L2_thigh_link"
+              boundingObject Pose {
+                translation 0 -0.08 0
+                children [
+                  Box {
+                    size 0.035 0.16 0.035
+                  }
+                ]
+              }
+              physics Physics {
+                density -1
+                mass 0.12
+                centerOfMass [
+                  0 -0.08 0
+                ]
+              }
+              linearVelocity -0.20444838065532134 0.01749241983801942 -0.07976700152398924
+              angularVelocity 0.18477515329777944 -0.1537239666765333 -1.4281742959716313
+            }
+          }
+        ]
+        name "FL_L1_yaw_link"
+        boundingObject Pose {
+          translation 0 0 0.035
+          children [
+            Box {
+              size 0.035 0.035 0.07
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+          centerOfMass [
+            0 0 0.035
+          ]
+        }
+        linearVelocity -0.12384373668324326 0.09216406042473463 -0.07737572831842732
+        angularVelocity -0.3220110285439347 0.032363530008754554 0.34681076344599376
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position 8.663527304951231e-07
+        anchor 0.15 -0.02 -0.12
+        minStop -0.8
+        maxStop 0.8
+        dampingConstant 0.05
+      }
+      device [
+        RotationalMotor {
+          name "FR_hip_yaw"
+          maxVelocity 5
+          maxTorque 5
+        }
+        PositionSensor {
+          name "FR_hip_yaw_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation 0.1500127483436573 -0.019983899490981717 -0.12018186081881162
+        rotation 1 0 0 0.13090117245314112
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.2 0
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.025
+            }
+          }
+          Pose {
+            translation 0 0 -0.035
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.7 0.2 0.8
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.035 0.035 0.07
+                }
+              }
+            ]
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0.8656106538877549
+              axis 0 0 1
+              anchor 0 0 -0.07
+              minStop -1.57
+              maxStop 1.57
+              dampingConstant 0.05
+            }
+            device [
+              RotationalMotor {
+                name "FR_hip_pitch"
+                maxVelocity 5
+                maxTorque 5
+              }
+              PositionSensor {
+                name "FR_hip_pitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 -0.07
+              rotation 0 0 1 0.8656106538877552
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.1 0.2 1
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Sphere {
+                    radius 0.022
+                  }
+                }
+                Pose {
+                  translation 0 -0.08 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.6 0.1 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry Box {
+                        size 0.035 0.16 0.035
+                      }
+                    }
+                  ]
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position -1.697289224852246
+                    axis 0 0 1
+                    anchor 0 -0.16 0
+                    minStop -2.2
+                    maxStop 0.2
+                    dampingConstant 0.05
+                  }
+                  device [
+                    RotationalMotor {
+                      name "FR_knee_pitch"
+                      maxVelocity 5
+                      maxTorque 5
+                    }
+                    PositionSensor {
+                      name "FR_knee_pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 -0.16 0
+                    rotation 0 0 -1 1.6972892248522462
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.1 0.2 1
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Sphere {
+                          radius 0.02
+                        }
+                      }
+                      Pose {
+                        translation 0 -0.08 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0.8 0.7 0.2
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Box {
+                              size 0.03 0.16 0.03
+                            }
+                          }
+                        ]
+                      }
+                      Pose {
+                        translation 0 -0.16 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0 0 0
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Sphere {
+                              radius 0.018
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "FR_L3_shank_link"
+                    boundingObject Pose {
+                      translation 0 -0.08 0
+                      children [
+                        Box {
+                          size 0.03 0.16 0.03
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 0.08
+                      centerOfMass [
+                        0 -0.08 0
+                      ]
+                    }
+                    linearVelocity -0.04745199750292456 0.03252783264845612 -0.02631161821402575
+                    angularVelocity -0.4360757009268645 -0.03272500683817253 0.7305710129102126
+                  }
+                }
+              ]
+              name "FR_L2_thigh_link"
+              boundingObject Pose {
+                translation 0 -0.08 0
+                children [
+                  Box {
+                    size 0.035 0.16 0.035
+                  }
+                ]
+              }
+              physics Physics {
+                density -1
+                mass 0.12
+                centerOfMass [
+                  0 -0.08 0
+                ]
+              }
+              linearVelocity -0.11252688122364449 0.05199726378466621 -0.06594937805255628
+              angularVelocity -0.3690134853112173 0.005533679722217744 0.5050490664096738
+            }
+          }
+        ]
+        name "FR_L1_yaw_link"
+        boundingObject Pose {
+          translation 0 0 -0.035
+          children [
+            Box {
+              size 0.035 0.035 0.07
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+          centerOfMass [
+            0 0 -0.035
+          ]
+        }
+        locked TRUE
+        linearVelocity -0.13673897811616734 0.026431986332234668 -0.08325012837729752
+        angularVelocity -0.3219769704399814 0.032346424712371445 0.34681170812001505
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.4529289458023193e-08
+        anchor -0.15 -0.02 0.12
+        minStop -0.8
+        maxStop 0.8
+        dampingConstant 0.05
+      }
+      device [
+        RotationalMotor {
+          name "RL_hip_yaw"
+          maxVelocity 5
+          maxTorque 5
+        }
+        PositionSensor {
+          name "RL_hip_yaw_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.14998736704301166 -0.01998441449569808 0.11987701435071792
+        rotation -1 0 0 0.13089970842887078
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.2 0
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.025
+            }
+          }
+          Pose {
+            translation 0 0 0.035
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.7 0.2 0.8
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.035 0.035 0.07
+                }
+              }
+            ]
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0.8617350241948194
+              axis 0 0 1
+              anchor 0 0 0.07
+              minStop -1.57
+              maxStop 1.57
+              dampingConstant 0.05
+            }
+            device [
+              RotationalMotor {
+                name "RL_hip_pitch"
+                maxVelocity 5
+                maxTorque 5
+              }
+              PositionSensor {
+                name "RL_hip_pitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 0.07
+              rotation 0 0 1 0.8617350241948193
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.1 0.2 1
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Sphere {
+                    radius 0.022
+                  }
+                }
+                Pose {
+                  translation 0 -0.08 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.6 0.1 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry Box {
+                        size 0.035 0.16 0.035
+                      }
+                    }
+                  ]
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position -1.6965345497854756
+                    axis 0 0 1
+                    anchor 0 -0.16 0
+                    minStop -2.2
+                    maxStop 0.2
+                    dampingConstant 0.05
+                  }
+                  device [
+                    RotationalMotor {
+                      name "RL_knee_pitch"
+                      maxVelocity 5
+                      maxTorque 5
+                    }
+                    PositionSensor {
+                      name "RL_knee_pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 -0.16 0
+                    rotation 0 0 -1 1.6965345497854754
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.1 0.2 1
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Sphere {
+                          radius 0.02
+                        }
+                      }
+                      Pose {
+                        translation 0 -0.08 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0.8 0.7 0.2
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Box {
+                              size 0.03 0.16 0.03
+                            }
+                          }
+                        ]
+                      }
+                      Pose {
+                        translation 0 -0.16 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0 0 0
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Sphere {
+                              radius 0.018
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "RL_L3_shank_link"
+                    boundingObject Pose {
+                      translation 0 -0.08 0
+                      children [
+                        Box {
+                          size 0.03 0.16 0.03
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 0.08
+                      centerOfMass [
+                        0 -0.08 0
+                      ]
+                    }
+                    linearVelocity -0.030188428063333096 0.030947237344246103 -0.013961850086079381
+                    angularVelocity -0.3624833035264746 0.047237158336267085 0.48874134300740274
+                  }
+                }
+              ]
+              name "RL_L2_thigh_link"
+              boundingObject Pose {
+                translation 0 -0.08 0
+                children [
+                  Box {
+                    size 0.035 0.16 0.035
+                  }
+                ]
+              }
+              physics Physics {
+                density -1
+                mass 0.12
+                centerOfMass [
+                  0 -0.08 0
+                ]
+              }
+              linearVelocity -0.09283111032232756 0.018847765923229527 -0.054146635706682704
+              angularVelocity -0.4165862579748111 0.06710627926517837 0.6781951837551411
+            }
+          }
+        ]
+        name "RL_L1_yaw_link"
+        boundingObject Pose {
+          translation 0 0 0.035
+          children [
+            Box {
+              size 0.035 0.035 0.07
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+          centerOfMass [
+            0 0 0.035
+          ]
+        }
+        linearVelocity -0.1309813013173258 -0.03465621358901581 -0.07218668990489377
+        angularVelocity -0.32198748880061134 0.03235434428518694 0.34680626471511317
+      }
+    }
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        position -1.529970017580103e-07
+        anchor -0.15 -0.02 -0.12
+        minStop -0.8
+        maxStop 0.8
+        dampingConstant 0.05
+      }
+      device [
+        RotationalMotor {
+          name "RR_hip_yaw"
+          maxVelocity 5
+          maxTorque 5
+        }
+        PositionSensor {
+          name "RR_hip_yaw_sensor"
+        }
+      ]
+      endPoint Solid {
+        translation -0.1499997403010806 -0.02000362916599073 -0.12018426196994017
+        rotation 1 0 0 0.13089954090257164
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColor 1 0.2 0
+              roughness 1
+              metalness 0
+            }
+            geometry Sphere {
+              radius 0.025
+            }
+          }
+          Pose {
+            translation 0 0 -0.035
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 0.7 0.2 0.8
+                  roughness 1
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.035 0.035 0.07
+                }
+              }
+            ]
+          }
+          HingeJoint {
+            jointParameters HingeJointParameters {
+              position 0.857295996565162
+              axis 0 0 1
+              anchor 0 0 -0.07
+              minStop -1.57
+              maxStop 1.57
+              dampingConstant 0.05
+            }
+            device [
+              RotationalMotor {
+                name "RR_hip_pitch"
+                maxVelocity 5
+                maxTorque 5
+              }
+              PositionSensor {
+                name "RR_hip_pitch_sensor"
+              }
+            ]
+            endPoint Solid {
+              translation 0 0 -0.07
+              rotation 0 0 1 0.8572959965651619
+              children [
+                Shape {
+                  appearance PBRAppearance {
+                    baseColor 0.1 0.2 1
+                    roughness 1
+                    metalness 0
+                  }
+                  geometry Sphere {
+                    radius 0.022
+                  }
+                }
+                Pose {
+                  translation 0 -0.08 0
+                  children [
+                    Shape {
+                      appearance PBRAppearance {
+                        baseColor 0.6 0.1 0.6
+                        roughness 1
+                        metalness 0
+                      }
+                      geometry Box {
+                        size 0.035 0.16 0.035
+                      }
+                    }
+                  ]
+                }
+                HingeJoint {
+                  jointParameters HingeJointParameters {
+                    position -1.8051567228039904
+                    axis 0 0 1
+                    anchor 0 -0.16 0
+                    minStop -2.2
+                    maxStop 0.2
+                    dampingConstant 0.05
+                  }
+                  device [
+                    RotationalMotor {
+                      name "RR_knee_pitch"
+                      maxVelocity 5
+                      maxTorque 5
+                    }
+                    PositionSensor {
+                      name "RR_knee_pitch_sensor"
+                    }
+                  ]
+                  endPoint Solid {
+                    translation 0 -0.16 0
+                    rotation 0 0 -1 1.8051567228039904
+                    children [
+                      Shape {
+                        appearance PBRAppearance {
+                          baseColor 0.1 0.2 1
+                          roughness 1
+                          metalness 0
+                        }
+                        geometry Sphere {
+                          radius 0.02
+                        }
+                      }
+                      Pose {
+                        translation 0 -0.08 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0.8 0.7 0.2
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Box {
+                              size 0.03 0.16 0.03
+                            }
+                          }
+                        ]
+                      }
+                      Pose {
+                        translation 0 -0.16 0
+                        children [
+                          Shape {
+                            appearance PBRAppearance {
+                              baseColor 0 0 0
+                              roughness 1
+                              metalness 0
+                            }
+                            geometry Sphere {
+                              radius 0.018
+                            }
+                          }
+                        ]
+                      }
+                    ]
+                    name "RR_L3_shank_link"
+                    boundingObject Pose {
+                      translation 0 -0.08 0
+                      children [
+                        Box {
+                          size 0.03 0.16 0.03
+                        }
+                      ]
+                    }
+                    physics Physics {
+                      density -1
+                      mass 0.08
+                      centerOfMass [
+                        0 -0.08 0
+                      ]
+                    }
+                    linearVelocity -0.23329472607106852 0.015067021389272017 -0.056189215463089935
+                    angularVelocity 0.31430065684073005 0.3950755009193774 -1.7926467525026175
+                  }
+                }
+              ]
+              name "RR_L2_thigh_link"
+              boundingObject Pose {
+                translation 0 -0.08 0
+                children [
+                  Box {
+                    size 0.035 0.16 0.035
+                  }
+                ]
+              }
+              physics Physics {
+                density -1
+                mass 0.12
+                centerOfMass [
+                  0 -0.08 0
+                ]
+              }
+              linearVelocity -0.1461166517298465 -0.10596260043806778 -0.07358486108532442
+              angularVelocity -0.21946436199665964 0.0907960376619859 0.002049527184585287
+            }
+          }
+        ]
+        name "RR_L1_yaw_link"
+        boundingObject Pose {
+          translation 0 0 -0.035
+          children [
+            Box {
+              size 0.035 0.035 0.07
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.05
+          centerOfMass [
+            0 0 -0.035
+          ]
+        }
+        linearVelocity -0.1438869768910873 -0.10046249356835849 -0.07797071164223357
+        angularVelocity -0.3220039536411432 0.03236093140442216 0.3467871706536267
+      }
+    }
+  ]
+  name "quad_3dof_L123"
+  boundingObject Box {
+    size 0.4 0.08 0.2
+  }
+  physics Physics {
+    density -1
+    mass 1
+    centerOfMass [
+      0 0 0
+    ]
+  }
+  controller "<extern>"
+  linearVelocity -0.13921357285445754 -0.0037567719881878743 -0.082621654458889
+  angularVelocity -0.32199855100885255 0.032354372435492496 0.34679641383284593
+}
+RectangleArena {
+  translation -0.583992 0 -0.43044
+  rotation 0.9884496090741877 0.1071619576180971 0.1071619576180971 -1.582415307179586
+  floorSize 100 100
+}

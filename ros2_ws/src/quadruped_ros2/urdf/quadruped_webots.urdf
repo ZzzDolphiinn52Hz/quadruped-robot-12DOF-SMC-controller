@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<robot name="quad_3dof_L123">
+
+  <link name="base_link"/>
+
+  <!-- Front Left -->
+  <link name="FL_hip_yaw_link"/>
+  <joint name="FL_hip_yaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="FL_hip_yaw_link"/>
+    <origin xyz="0.15 0.12 0.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.8" upper="0.8" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="FL_hip_pitch_link"/>
+  <joint name="FL_hip_pitch" type="revolute">
+    <parent link="FL_hip_yaw_link"/>
+    <child link="FL_hip_pitch_link"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="FL_knee_pitch_link"/>
+  <joint name="FL_knee_pitch" type="revolute">
+    <parent link="FL_hip_pitch_link"/>
+    <child link="FL_knee_pitch_link"/>
+    <origin xyz="0 -0.16 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.2" upper="0.2" effort="5.0" velocity="5.0"/>
+  </joint>
+
+
+  <!-- Front Right -->
+  <link name="FR_hip_yaw_link"/>
+  <joint name="FR_hip_yaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="FR_hip_yaw_link"/>
+    <origin xyz="0.15 -0.12 0.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.8" upper="0.8" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="FR_hip_pitch_link"/>
+  <joint name="FR_hip_pitch" type="revolute">
+    <parent link="FR_hip_yaw_link"/>
+    <child link="FR_hip_pitch_link"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="FR_knee_pitch_link"/>
+  <joint name="FR_knee_pitch" type="revolute">
+    <parent link="FR_hip_pitch_link"/>
+    <child link="FR_knee_pitch_link"/>
+    <origin xyz="0 -0.16 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.2" upper="0.2" effort="5.0" velocity="5.0"/>
+  </joint>
+
+
+  <!-- Rear Left -->
+  <link name="RL_hip_yaw_link"/>
+  <joint name="RL_hip_yaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="RL_hip_yaw_link"/>
+    <origin xyz="-0.15 0.12 0.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.8" upper="0.8" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="RL_hip_pitch_link"/>
+  <joint name="RL_hip_pitch" type="revolute">
+    <parent link="RL_hip_yaw_link"/>
+    <child link="RL_hip_pitch_link"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="RL_knee_pitch_link"/>
+  <joint name="RL_knee_pitch" type="revolute">
+    <parent link="RL_hip_pitch_link"/>
+    <child link="RL_knee_pitch_link"/>
+    <origin xyz="0 -0.16 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.2" upper="0.2" effort="5.0" velocity="5.0"/>
+  </joint>
+
+
+  <!-- Rear Right -->
+  <link name="RR_hip_yaw_link"/>
+  <joint name="RR_hip_yaw" type="revolute">
+    <parent link="base_link"/>
+    <child link="RR_hip_yaw_link"/>
+    <origin xyz="-0.15 -0.12 0.0" rpy="0 0 0"/>
+    <axis xyz="1 0 0"/>
+    <limit lower="-0.8" upper="0.8" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="RR_hip_pitch_link"/>
+  <joint name="RR_hip_pitch" type="revolute">
+    <parent link="RR_hip_yaw_link"/>
+    <child link="RR_hip_pitch_link"/>
+    <origin xyz="0 0 0.07" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-1.57" upper="1.57" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <link name="RR_knee_pitch_link"/>
+  <joint name="RR_knee_pitch" type="revolute">
+    <parent link="RR_hip_pitch_link"/>
+    <child link="RR_knee_pitch_link"/>
+    <origin xyz="0 -0.16 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit lower="-2.2" upper="0.2" effort="5.0" velocity="5.0"/>
+  </joint>
+
+  <webots>
+    <plugin type="webots_ros2_control::Ros2Control">
+      <parameters>CONTROLLER_CONFIG_PATH</parameters>
+    </plugin>
+  </webots>
+
+  <ros2_control name="WebotsSystem" type="system">
+    <hardware>
+      <plugin>webots_ros2_control/WebotsSystem</plugin>
+    </hardware>
+
+    <joint name="FL_hip_yaw">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FL_hip_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FL_knee_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FR_hip_yaw">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FR_hip_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="FR_knee_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RL_hip_yaw">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RL_hip_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RL_knee_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RR_hip_yaw">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RR_hip_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+    <joint name="RR_knee_pitch">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+    </joint>
+
+  </ros2_control>
+
+</robot>

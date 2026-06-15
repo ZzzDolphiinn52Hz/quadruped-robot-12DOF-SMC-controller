@@ -1,0 +1,16 @@
+package.xml
+setup.cfg
+setup.py
+config/ros2_controllers.yaml
+launch/quadruped_webots.launch.py
+quadruped_ros2/__init__.py
+quadruped_ros2.egg-info/PKG-INFO
+quadruped_ros2.egg-info/SOURCES.txt
+quadruped_ros2.egg-info/dependency_links.txt
+quadruped_ros2.egg-info/entry_points.txt
+quadruped_ros2.egg-info/requires.txt
+quadruped_ros2.egg-info/top_level.txt
+quadruped_ros2.egg-info/zip-safe
+resource/quadruped_ros2
+urdf/quadruped_webots.urdf
+worlds/quad_3dof_L1L2L3_4legs.wbt
