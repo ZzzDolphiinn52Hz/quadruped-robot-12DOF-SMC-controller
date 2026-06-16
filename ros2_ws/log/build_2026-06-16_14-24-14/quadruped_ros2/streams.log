@@ -1,0 +1,19 @@
+[0.548s] Invoking command in '/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2': PYTHONPATH=/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/build --no-deps symlink_data
+[0.739s] running develop
+[0.850s] running egg_info
+[0.850s] writing quadruped_ros2.egg-info/PKG-INFO
+[0.850s] writing dependency_links to quadruped_ros2.egg-info/dependency_links.txt
+[0.850s] writing entry points to quadruped_ros2.egg-info/entry_points.txt
+[0.850s] writing requirements to quadruped_ros2.egg-info/requires.txt
+[0.850s] writing top-level names to quadruped_ros2.egg-info/top_level.txt
+[0.852s] reading manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+[0.853s] writing manifest file 'quadruped_ros2.egg-info/SOURCES.txt'
+[0.853s] running build_ext
+[0.854s] Creating /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages/quadruped-ros2.egg-link (link to .)
+[0.854s] Installing joint_monitor script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.854s] Installing pose_commander script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.854s] Installing quadruped_main script to /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/quadruped_ros2
+[0.854s] 
+[0.855s] Installed /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2
+[0.855s] running symlink_data
+[0.877s] Invoked command in '/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2' returned '0': PYTHONPATH=/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/prefix_override:/usr/lib/python3/dist-packages/colcon_core/task/python/colcon_distutils_commands:/home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/install/quadruped_ros2/lib/python3.10/site-packages:${PYTHONPATH} /usr/bin/python3 -W ignore:setup.py install is deprecated -W ignore:easy_install command is deprecated setup.py develop --editable --build-directory /home/dolphiinn/Documents/quadruped-robot/quadruped-robot-12DOF-SMC-controller/ros2_ws/build/quadruped_ros2/build --no-deps symlink_data

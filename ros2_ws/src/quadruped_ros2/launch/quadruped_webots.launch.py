@@ -29,13 +29,21 @@ def generate_launch_description():
         'ros2_controllers.yaml'
     )
 
+    # Đọc URDF gốc
     with open(urdf_path, 'r') as f:
         robot_description = f.read()
 
+    # Thay placeholder bằng đường dẫn config thật
     robot_description = robot_description.replace(
         'CONTROLLER_CONFIG_PATH',
         controller_config
     )
+
+    # Ghi ra file tạm để tránh lỗi ROS2 parse parameter XML nhiều dòng
+    processed_urdf_path = '/tmp/quadruped_webots_processed.urdf'
+
+    with open(processed_urdf_path, 'w') as f:
+        f.write(robot_description)
 
     webots = WebotsLauncher(
         world=world_path
@@ -44,7 +52,7 @@ def generate_launch_description():
     webots_controller = WebotsController(
         robot_name='quad_3dof_L123',
         parameters=[
-            {'robot_description': robot_description},
+            {'robot_description': processed_urdf_path},
             controller_config
         ]
     )
@@ -60,20 +68,25 @@ def generate_launch_description():
         output='screen'
     )
 
-    position_controller_spawner = Node(
+    yaw_position_controller_spawner = Node(
         package='controller_manager',
         executable='spawner',
         arguments=[
-            'position_controller',
+            'yaw_position_controller',
             '--controller-manager',
             '/controller_manager'
         ],
         output='screen'
     )
-    main_controller_node = Node(
-        package='quadruped_ros2',
-        executable='quadruped_main',
-        name='quadruped_main_controller',
+
+    leg_effort_controller_spawner = Node(
+        package='controller_manager',
+        executable='spawner',
+        arguments=[
+            'leg_effort_controller',
+            '--controller-manager',
+            '/controller_manager'
+        ],
         output='screen'
     )
 
@@ -81,6 +94,6 @@ def generate_launch_description():
         webots,
         webots_controller,
         joint_state_broadcaster_spawner,
-        position_controller_spawner,
-        #main_controller_node
+        yaw_position_controller_spawner,
+        leg_effort_controller_spawner
     ])
