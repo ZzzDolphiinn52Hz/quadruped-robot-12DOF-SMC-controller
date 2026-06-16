@@ -71,7 +71,7 @@ class QuadrupedMainController(Node):
             "/smc_debug",
             10
         )
-
+    
         # Debug qd 12 joints
         self.qd_pub = self.create_publisher(
             Float64MultiArray,

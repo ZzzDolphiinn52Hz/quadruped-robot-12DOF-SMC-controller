@@ -72,34 +72,34 @@ class RobotConfig:
     # Watchdog
     cmd_timeout: float = 0.50
     
-    startup_hold_time: float = 1.5
-    small_stand_fraction: float = 0.05
-    small_stand_ramp_time: float = 4.0
-    small_stand_hold_time: float = 8.0
-    full_stand_enabled: bool = False
-    full_stand_ramp_time: float = 10.0
+    startup_hold_time: float = 1.0
+    small_stand_fraction: float = 0.20
+    small_stand_ramp_time: float = 2.0
+    small_stand_hold_time: float = 2.0
+    full_stand_enabled: bool = True
+    full_stand_ramp_time: float = 3.0
 
     # Control loop
     control_period: float = 0.02
 
     # Đảo chiều tiến/lùi cho đúng Webots model
-    forward_sign: float = -1.0
+    forward_sign: float = 1.0
 
     # Sliding Mode Controller for hip/knee effort tracking
-    smc_lambda_yaw: float = 1.5
-    smc_lambda_hip: float = 3.0
-    smc_lambda_knee: float = 2.0
+    smc_lambda_yaw: float = 7.0
+    smc_lambda_hip: float = 10.0
+    smc_lambda_knee: float = 10.0
 
-    smc_linear_gain_yaw: float = 0.06
-    smc_linear_gain_hip: float = 0.25
-    smc_linear_gain_knee: float = 0.30
+    smc_linear_gain_yaw: float = 0.0
+    smc_linear_gain_hip: float = 0.0
+    smc_linear_gain_knee: float = 0.0
 
-    smc_switching_gain_yaw: float = 0.12
-    smc_switching_gain_hip: float = 0.90
-    smc_switching_gain_knee: float = 1.10
+    smc_switching_gain_yaw: float = 0.40
+    smc_switching_gain_hip: float = 2.50
+    smc_switching_gain_knee: float = 2.50
 
     # Boundary layer width for sat(s / phi). Increase to reduce chattering.
-    smc_boundary_layer: float = 0.35
+    smc_boundary_layer: float = 2.0
 
     # Small desired acceleration feed-forward. Keep conservative without a
     # full rigid-body dynamics model.
@@ -109,13 +109,13 @@ class RobotConfig:
 
     # Giới hạn torque
     effort_limit: float = 3.80
-    effort_rate_limit: float = 0.140
+    effort_rate_limit: float = 3.80
     yaw_effort_limit: float = 0.45
 
     # Giới hạn error để tránh torque spike
     position_error_limit: float = 0.70
-    velocity_error_limit: float = 2.50
-    desired_acceleration_limit: float = 25.0
+    velocity_error_limit: float = 1.50
+    desired_acceleration_limit: float = 5.0
 
     # Torque hỗ trợ giữ thân trong stance. Keep disabled while tuning the
     # small first stand pose.
@@ -124,6 +124,6 @@ class RobotConfig:
     knee_support_torque: float = 0.45
 
     # Nếu joint chạy ngược chiều qd, đổi riêng sign của nhóm joint đó.
-    yaw_effort_sign: float = 1.0
+    yaw_effort_sign: float = -1.0
     hip_effort_sign: float = 1.0
     knee_effort_sign: float = 1.0
