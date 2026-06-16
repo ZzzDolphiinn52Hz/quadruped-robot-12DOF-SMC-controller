@@ -22,7 +22,7 @@ class GaitPlanner:
         if abs(vy) > 0.03:
             return MODE_LATERAL
 
-        if abs(vx) > 0.02:
+        if abs(vx) > 0.005:
             return MODE_TROT
 
         return MODE_STAND
@@ -60,7 +60,7 @@ class GaitPlanner:
         direction = self.config.forward_sign * (1.0 if vx >= 0.0 else -1.0)
 
         step_length = clamp(
-            speed * 0.35,
+            speed * self.config.step_length_gain,
             self.config.min_step_length,
             self.config.max_step_length
         )

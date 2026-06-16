@@ -46,7 +46,8 @@ def generate_launch_description():
         f.write(robot_description)
 
     webots = WebotsLauncher(
-        world=world_path
+        world=world_path,
+        mode='pause'
     )
 
     webots_controller = WebotsController(
@@ -90,10 +91,17 @@ def generate_launch_description():
         output='screen'
     )
 
+    quadruped_main_controller = Node(
+        package='quadruped_ros2',
+        executable='quadruped_main',
+        output='screen'
+    )
+
     return LaunchDescription([
         webots,
         webots_controller,
         joint_state_broadcaster_spawner,
         yaw_position_controller_spawner,
-        leg_effort_controller_spawner
+        leg_effort_controller_spawner,
+        quadruped_main_controller
     ])

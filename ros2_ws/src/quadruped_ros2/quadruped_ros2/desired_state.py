@@ -11,20 +11,22 @@ class DesiredStateEstimator:
 
         self.initialized = False
 
+    def reset(self, qd_new):
+        self.qd = qd_new.copy()
+        self.qd_prev = qd_new.copy()
+
+        self.dqd = [0.0] * self.joint_count
+        self.dqd_prev = [0.0] * self.joint_count
+        self.ddqd = [0.0] * self.joint_count
+
+        self.initialized = True
+
     def update(self, qd_new, dt):
         if dt <= 0.0:
             return self.qd, self.dqd, self.ddqd
 
         if not self.initialized:
-            self.qd = qd_new.copy()
-            self.qd_prev = qd_new.copy()
-
-            self.dqd = [0.0] * self.joint_count
-            self.dqd_prev = [0.0] * self.joint_count
-            self.ddqd = [0.0] * self.joint_count
-
-            self.initialized = True
-
+            self.reset(qd_new)
             return self.qd, self.dqd, self.ddqd
 
         self.qd = qd_new.copy()

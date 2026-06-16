@@ -1,0 +1,15 @@
+# Build artifacts
+*.exe
+*.o
+*.d
+build/
+bin/
+
+# MATLAB/Webots temporary files
+*.asv
+*.log
+.quad_3dof_*.wbproj
+
+# Python
+__pycache__/
+*.pyc
