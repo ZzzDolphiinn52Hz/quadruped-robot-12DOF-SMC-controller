@@ -47,7 +47,7 @@ def generate_launch_description():
 
     webots = WebotsLauncher(
         world=world_path,
-        mode='pause'
+        mode='realtime'
     )
 
     webots_controller = WebotsController(
@@ -64,7 +64,9 @@ def generate_launch_description():
         arguments=[
             'joint_state_broadcaster',
             '--controller-manager',
-            '/controller_manager'
+            '/controller_manager',
+            '--switch-timeout',
+            '60'
         ],
         output='screen'
     )
@@ -75,7 +77,9 @@ def generate_launch_description():
         arguments=[
             'yaw_position_controller',
             '--controller-manager',
-            '/controller_manager'
+            '/controller_manager',
+            '--switch-timeout',
+            '60'
         ],
         output='screen'
     )
@@ -86,7 +90,9 @@ def generate_launch_description():
         arguments=[
             'leg_effort_controller',
             '--controller-manager',
-            '/controller_manager'
+            '/controller_manager',
+            '--switch-timeout',
+            '60'
         ],
         output='screen'
     )
@@ -94,7 +100,21 @@ def generate_launch_description():
     quadruped_main_controller = Node(
         package='quadruped_ros2',
         executable='quadruped_main',
-        output='screen'
+        output='screen',
+        parameters=[{'use_sim_time': False}]
+    )
+
+    odem_tracker = Node(
+        package='quadruped_ros2',
+        executable='odem_tracker',
+        output='screen',
+        parameters=[
+            {'use_sim_time': False},
+            {'gps_point_topic': '/quad_3dof_L123/base_gps'},
+            {'gps_fix_topic': '/quad_3dof_L123/base_gps/fix'},
+            {'odem_topic': '/odem'},
+            {'odom_alias_topic': '/odom'},
+        ]
     )
 
     return LaunchDescription([
@@ -103,5 +123,6 @@ def generate_launch_description():
         joint_state_broadcaster_spawner,
         yaw_position_controller_spawner,
         leg_effort_controller_spawner,
-        quadruped_main_controller
+        quadruped_main_controller,
+        odem_tracker
     ])

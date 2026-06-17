@@ -1,3 +1,5 @@
+import math
+
 from quadruped_ros2.robot_config import (
     JOINT_ORDER,
     YAW_INDICES,
@@ -5,6 +7,14 @@ from quadruped_ros2.robot_config import (
     HIP_PITCH_INDICES,
     KNEE_PITCH_INDICES,
 )
+
+
+LEG_JOINT_INDICES = {
+    "FL": (0, 1, 2),
+    "FR": (3, 4, 5),
+    "RL": (6, 7, 8),
+    "RR": (9, 10, 11),
+}
 
 
 def get_leg_name_from_joint_index(idx):
@@ -51,25 +61,63 @@ def build_effort_limits(config):
     return limits
 
 
-def build_support_torque(leg_commands, config):
+def build_support_torque(leg_commands, config, q):
     support = [0.0] * len(JOINT_ORDER)
 
     if not config.use_support_torque:
         return support
 
-    for idx in LEG_EFFORT_INDICES:
-        leg_name = get_leg_name_from_joint_index(idx)
-        contact = leg_commands[leg_name]["contact"]
+    contact_count = sum(
+        1 for leg_name in LEG_JOINT_INDICES
+        if leg_commands[leg_name]["contact"]
+    )
+    contact_count = max(1, contact_count)
+    body_force = (
+        config.support_force_scale
+        * config.body_mass
+        * config.gravity
+        / contact_count
+    )
 
-        if idx in HIP_PITCH_INDICES:
-            support_torque = config.hip_support_torque
-        else:
-            support_torque = config.knee_support_torque
+    thigh_com = 0.5 * config.L1
+    shank_com = 0.5 * config.L2
 
-        if not contact:
-            support_torque *= 0.10
+    for leg_name, (_, hip_idx, knee_idx) in LEG_JOINT_INDICES.items():
+        q1 = q[hip_idx]
+        q2 = q[knee_idx]
+        contact_scale = 1.0 if leg_commands[leg_name]["contact"] else 0.0
 
-        support[idx] = support_torque
+        gravity_hip = (
+            config.thigh_mass * config.gravity * thigh_com * math.sin(q1)
+            + config.shank_mass * config.gravity * (
+                config.L1 * math.sin(q1)
+                + shank_com * math.sin(q1 + q2)
+            )
+        )
+        gravity_knee = (
+            config.shank_mass
+            * config.gravity
+            * shank_com
+            * math.sin(q1 + q2)
+        )
+
+        load_hip = (
+            contact_scale
+            * body_force
+            * (
+                config.L1 * math.sin(q1)
+                + config.L2 * math.sin(q1 + q2)
+            )
+        )
+        load_knee = (
+            contact_scale
+            * body_force
+            * config.L2
+            * math.sin(q1 + q2)
+        )
+
+        support[hip_idx] = gravity_hip + load_hip + config.hip_support_torque
+        support[knee_idx] = gravity_knee + load_knee + config.knee_support_torque
 
     return support
 
@@ -126,7 +174,7 @@ def build_smc_effort_command(
         desired_acceleration_limit=config.desired_acceleration_limit,
         boundary_layer=config.smc_boundary_layer,
         effort_signs=effort_signs,
-        support_torque=build_support_torque(leg_commands, config),
+        support_torque=build_support_torque(leg_commands, config, q),
     )
 
 

@@ -17,8 +17,8 @@ TexturedBackground {
 TexturedBackgroundLight {
 }
 Robot {
-  translation -2.5558775668763802 0.2337407585787298 -0.917193760053533
-  rotation 0.12453983032917922 -0.9839346587923289 -0.1279156670967344 0.2874763427214577
+  translation -2.5558775668763802 0.25 -0.917193760053533
+  rotation 0 1 0 0
   children [
     Shape {
       appearance PBRAppearance {
@@ -30,13 +30,17 @@ Robot {
         size 0.4 0.08 0.2
       }
     }
+    GPS {
+      name "base_gps"
+      resolution 0.001
+    }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -2.7055932421769323e-07
+        position 0
         anchor 0.15 -0.02 0.12
         minStop -0.8
         maxStop 0.8
-        dampingConstant 0.05
+        dampingConstant 0.35
       }
       device [
         RotationalMotor {
@@ -49,8 +53,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.1499999701008902 -0.02003350738070838 0.11986262914135248
-        rotation -1.0 0.0 0.0 0.13089996445889235
+        translation 0.15 -0.02 0.12
+        rotation 0 1 0 0
         children [
           Shape {
             appearance PBRAppearance {
@@ -63,7 +67,7 @@ Robot {
             }
           }
           Pose {
-            translation 0.0 0.0 0.035
+            translation 0.0 0.0 -0.035
             children [
               Shape {
                 appearance PBRAppearance {
@@ -79,12 +83,12 @@ Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              position 0.8633667828198305
+              position 0.8127555613686607
               axis 0.0 0.0 1.0
-              anchor 0.0 0.0 0.07
+              anchor 0.0 0.0 -0.07
               minStop -1.57
               maxStop 1.57
-              dampingConstant 0.05
+              dampingConstant 0.35
             }
             device [
               RotationalMotor {
@@ -97,8 +101,8 @@ Robot {
               }
             ]
             endPoint Solid {
-              translation 0.0 0.0 0.07
-              rotation 0.0 0.0 1.0 0.8633667828198304
+              translation 0.0 0.0 0.0
+              rotation 0.0 0.0 1.0 0.8127555613686607
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -127,12 +131,12 @@ Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position -1.8004441877641035
+                    position -1.6255111227373213
                     axis 0.0 0.0 1.0
                     anchor 0.0 -0.16 0.0
                     minStop -2.2
                     maxStop 0.2
-                    dampingConstant 0.05
+                    dampingConstant 0.35
                   }
                   device [
                     RotationalMotor {
@@ -146,7 +150,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation 0.0 -0.16 0.0
-                    rotation 0.0 0.0 -1.0 1.8004441877641035
+                    rotation 0.0 0.0 -1.0 1.6255111227373213
                     children [
                       Shape {
                         appearance PBRAppearance {
@@ -233,7 +237,7 @@ Robot {
         ]
         name "FL_L1_yaw_link"
         boundingObject Pose {
-          translation 0.0 0.0 0.035
+          translation 0.0 0.0 -0.035
           children [
             Box {
               size 0.035 0.035 0.07
@@ -244,7 +248,7 @@ Robot {
           density -1
           mass 0.05
           centerOfMass [
-            0 0 0.035
+            0 0 -0.035
           ]
         }
         linearVelocity 0 0 0
@@ -253,11 +257,11 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position 8.663527304951231e-07
+        position 0
         anchor 0.15 -0.02 -0.12
         minStop -0.8
         maxStop 0.8
-        dampingConstant 0.05
+        dampingConstant 0.35
       }
       device [
         RotationalMotor {
@@ -270,8 +274,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.1500127483436573 -0.019983899490981717 -0.12018186081881162
-        rotation 1.0 0.0 0.0 0.13090117245314112
+        translation 0.15 -0.02 -0.12
+        rotation 0 1 0 0
         children [
           Shape {
             appearance PBRAppearance {
@@ -284,7 +288,7 @@ Robot {
             }
           }
           Pose {
-            translation 0.0 0.0 -0.035
+            translation 0.0 0.0 0.035
             children [
               Shape {
                 appearance PBRAppearance {
@@ -300,12 +304,12 @@ Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              position 0.8656106538877549
+              position 0.8127555613686607
               axis 0.0 0.0 1.0
-              anchor 0.0 0.0 -0.07
+              anchor 0.0 0.0 0.07
               minStop -1.57
               maxStop 1.57
-              dampingConstant 0.05
+              dampingConstant 0.35
             }
             device [
               RotationalMotor {
@@ -318,8 +322,8 @@ Robot {
               }
             ]
             endPoint Solid {
-              translation 0.0 0.0 -0.07
-              rotation 0.0 0.0 1.0 0.8656106538877552
+              translation 0.0 0.0 0.0
+              rotation 0.0 0.0 1.0 0.8127555613686607
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -348,12 +352,12 @@ Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position -1.697289224852246
+                    position -1.6255111227373213
                     axis 0.0 0.0 1.0
                     anchor 0.0 -0.16 0.0
                     minStop -2.2
                     maxStop 0.2
-                    dampingConstant 0.05
+                    dampingConstant 0.35
                   }
                   device [
                     RotationalMotor {
@@ -367,7 +371,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation 0.0 -0.16 0.0
-                    rotation 0.0 0.0 -1.0 1.6972892248522462
+                    rotation 0.0 0.0 -1.0 1.6255111227373213
                     children [
                       Shape {
                         appearance PBRAppearance {
@@ -454,7 +458,7 @@ Robot {
         ]
         name "FR_L1_yaw_link"
         boundingObject Pose {
-          translation 0.0 0.0 -0.035
+          translation 0.0 0.0 0.035
           children [
             Box {
               size 0.035 0.035 0.07
@@ -465,21 +469,20 @@ Robot {
           density -1
           mass 0.05
           centerOfMass [
-            0 0 -0.035
+            0 0 0.035
           ]
         }
-        locked TRUE
         linearVelocity 0 0 0
         angularVelocity 0 0 0
       }
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -1.4529289458023193e-08
+        position 0
         anchor -0.15 -0.02 0.12
         minStop -0.8
         maxStop 0.8
-        dampingConstant 0.05
+        dampingConstant 0.35
       }
       device [
         RotationalMotor {
@@ -492,8 +495,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.14998736704301166 -0.01998441449569808 0.11987701435071792
-        rotation -1.0 0.0 0.0 0.13089970842887078
+        translation -0.15 -0.02 0.12
+        rotation 0 1 0 0
         children [
           Shape {
             appearance PBRAppearance {
@@ -506,7 +509,7 @@ Robot {
             }
           }
           Pose {
-            translation 0.0 0.0 0.035
+            translation 0.0 0.0 -0.035
             children [
               Shape {
                 appearance PBRAppearance {
@@ -522,12 +525,12 @@ Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              position 0.8617350241948194
+              position 0.8127555613686607
               axis 0.0 0.0 1.0
-              anchor 0.0 0.0 0.07
+              anchor 0.0 0.0 -0.07
               minStop -1.57
               maxStop 1.57
-              dampingConstant 0.05
+              dampingConstant 0.35
             }
             device [
               RotationalMotor {
@@ -540,8 +543,8 @@ Robot {
               }
             ]
             endPoint Solid {
-              translation 0.0 0.0 0.07
-              rotation 0.0 0.0 1.0 0.8617350241948193
+              translation 0.0 0.0 0.0
+              rotation 0.0 0.0 1.0 0.8127555613686607
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -570,12 +573,12 @@ Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position -1.6965345497854756
+                    position -1.6255111227373213
                     axis 0.0 0.0 1.0
                     anchor 0.0 -0.16 0.0
                     minStop -2.2
                     maxStop 0.2
-                    dampingConstant 0.05
+                    dampingConstant 0.35
                   }
                   device [
                     RotationalMotor {
@@ -589,7 +592,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation 0.0 -0.16 0.0
-                    rotation 0.0 0.0 -1.0 1.6965345497854754
+                    rotation 0.0 0.0 -1.0 1.6255111227373213
                     children [
                       Shape {
                         appearance PBRAppearance {
@@ -676,7 +679,7 @@ Robot {
         ]
         name "RL_L1_yaw_link"
         boundingObject Pose {
-          translation 0.0 0.0 0.035
+          translation 0.0 0.0 -0.035
           children [
             Box {
               size 0.035 0.035 0.07
@@ -687,7 +690,7 @@ Robot {
           density -1
           mass 0.05
           centerOfMass [
-            0 0 0.035
+            0 0 -0.035
           ]
         }
         linearVelocity 0 0 0
@@ -696,11 +699,11 @@ Robot {
     }
     HingeJoint {
       jointParameters HingeJointParameters {
-        position -1.529970017580103e-07
+        position 0
         anchor -0.15 -0.02 -0.12
         minStop -0.8
         maxStop 0.8
-        dampingConstant 0.05
+        dampingConstant 0.35
       }
       device [
         RotationalMotor {
@@ -713,8 +716,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -0.1499997403010806 -0.02000362916599073 -0.12018426196994017
-        rotation 1.0 0.0 0.0 0.13089954090257164
+        translation -0.15 -0.02 -0.12
+        rotation 0 1 0 0
         children [
           Shape {
             appearance PBRAppearance {
@@ -727,7 +730,7 @@ Robot {
             }
           }
           Pose {
-            translation 0.0 0.0 -0.035
+            translation 0.0 0.0 0.035
             children [
               Shape {
                 appearance PBRAppearance {
@@ -743,12 +746,12 @@ Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              position 0.857295996565162
+              position 0.8127555613686607
               axis 0.0 0.0 1.0
-              anchor 0.0 0.0 -0.07
+              anchor 0.0 0.0 0.07
               minStop -1.57
               maxStop 1.57
-              dampingConstant 0.05
+              dampingConstant 0.35
             }
             device [
               RotationalMotor {
@@ -761,8 +764,8 @@ Robot {
               }
             ]
             endPoint Solid {
-              translation 0.0 0.0 -0.07
-              rotation 0.0 0.0 1.0 0.8572959965651619
+              translation 0.0 0.0 0.0
+              rotation 0.0 0.0 1.0 0.8127555613686607
               children [
                 Shape {
                   appearance PBRAppearance {
@@ -791,12 +794,12 @@ Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position -1.8051567228039904
+                    position -1.6255111227373213
                     axis 0.0 0.0 1.0
                     anchor 0.0 -0.16 0.0
                     minStop -2.2
                     maxStop 0.2
-                    dampingConstant 0.05
+                    dampingConstant 0.35
                   }
                   device [
                     RotationalMotor {
@@ -810,7 +813,7 @@ Robot {
                   ]
                   endPoint Solid {
                     translation 0.0 -0.16 0.0
-                    rotation 0.0 0.0 -1.0 1.8051567228039904
+                    rotation 0.0 0.0 -1.0 1.6255111227373213
                     children [
                       Shape {
                         appearance PBRAppearance {
@@ -897,7 +900,7 @@ Robot {
         ]
         name "RR_L1_yaw_link"
         boundingObject Pose {
-          translation 0.0 0.0 -0.035
+          translation 0.0 0.0 0.035
           children [
             Box {
               size 0.035 0.035 0.07
@@ -908,7 +911,7 @@ Robot {
           density -1
           mass 0.05
           centerOfMass [
-            0 0 -0.035
+            0 0 0.035
           ]
         }
         linearVelocity 0 0 0
@@ -928,11 +931,12 @@ Robot {
     ]
   }
   controller "<extern>"
-  linearVelocity -0.13921357285445754 -0.0037567719881878743 -0.082621654458889
-  angularVelocity -0.32199855100885255 0.032354372435492496 0.34679641383284593
+  linearVelocity 0 0 0
+  angularVelocity 0 0 0
 }
 RectangleArena {
   translation -0.583992 0 -0.43044
   rotation 0.9884496090741877 0.1071619576180971 0.1071619576180971 -1.582415307179586
   floorSize 100 100
 }
+

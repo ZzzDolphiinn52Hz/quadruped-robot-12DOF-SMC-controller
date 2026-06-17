@@ -46,6 +46,7 @@ class QuadrupedMainController(Node):
 
         self.last_time = self.get_clock().now()
         self.last_cmd_time = self.get_clock().now()
+        self.last_cmd_log_time = None
         self.last_log_time = self.get_clock().now()
         self.start_time = self.get_clock().now()
         self.initial_joint_position = None
@@ -65,7 +66,9 @@ class QuadrupedMainController(Node):
             10
         )
 
-        # Debug: [mode, phase, max_leg_error, max_s, max_effort, max_yaw_error, stand_fraction]
+        # Debug:
+        # [mode, phase, max_leg_error, max_s, max_effort, max_yaw_error,
+        #  stand_fraction, cmd_vx, cmd_vy, cmd_wz, cmd_age]
         self.debug_pub = self.create_publisher(
             Float64MultiArray,
             "/smc_debug",
@@ -106,10 +109,23 @@ class QuadrupedMainController(Node):
         self.get_logger().info("Publish: /desired_joint_command")
 
     def cmd_vel_callback(self, msg):
+        now = self.get_clock().now()
         self.vx = msg.linear.x
         self.vy = msg.linear.y
         self.wz = msg.angular.z
-        self.last_cmd_time = self.get_clock().now()
+        self.last_cmd_time = now
+
+        should_log = self.last_cmd_log_time is None
+        if not should_log:
+            elapsed = (now - self.last_cmd_log_time).nanoseconds * 1e-9
+            should_log = elapsed >= 1.0
+
+        if should_log:
+            self.last_cmd_log_time = now
+            self.get_logger().info(
+                f"cmd_vel received: "
+                f"vx={self.vx:.3f}, vy={self.vy:.3f}, wz={self.wz:.3f}"
+            )
 
     def joint_state_callback(self, msg):
         self.joint_state_reader.update(msg)
@@ -232,11 +248,13 @@ class QuadrupedMainController(Node):
         self.latest_error = e
         self.latest_sliding_surface = s
 
-        # Ramp torque lúc mới start để tránh giật
-        ramp_time = 1.0
+        # Ramp torque lúc mới start để tránh giật.
+        # Start from zero torque; a non-zero floor can kick the effort loop
+        # before the standup target has settled.
+        ramp_time = 2.0
         elapsed_from_start = (now - self.start_time).nanoseconds * 1e-9
         torque_scale = min(1.0, elapsed_from_start / ramp_time)
-        torque_scale = max(0.45, torque_scale)
+        torque_scale = max(0.0, torque_scale)
 
         effort_command = [
             torque_scale * tau for tau in effort_command
@@ -268,6 +286,7 @@ class QuadrupedMainController(Node):
             for i in LEG_EFFORT_INDICES
         )
         max_effort = max(abs(x) for x in self.latest_effort_command)
+        cmd_age = (self.get_clock().now() - self.last_cmd_time).nanoseconds * 1e-9
 
         msg = Float64MultiArray()
         msg.data = [
@@ -278,6 +297,10 @@ class QuadrupedMainController(Node):
             float(max_effort),
             float(max_yaw_error),
             float(self.latest_stand_fraction),
+            float(self.vx),
+            float(self.vy),
+            float(self.wz),
+            float(cmd_age),
         ]
 
         self.debug_pub.publish(msg)
@@ -303,6 +326,7 @@ class QuadrupedMainController(Node):
             for i in LEG_EFFORT_INDICES
         )
         max_effort = max(abs(x) for x in self.latest_effort_command)
+        cmd_age = (now - self.last_cmd_time).nanoseconds * 1e-9
         max_leg_error_index = max(
             LEG_EFFORT_INDICES,
             key=lambda i: abs(self.latest_error[i])
@@ -311,6 +335,7 @@ class QuadrupedMainController(Node):
         self.get_logger().info(
             f"mode={self.gait_planner.current_mode}, "
             f"vx={self.vx:.3f}, vy={self.vy:.3f}, wz={self.wz:.3f}, "
+            f"cmd_age={cmd_age:.2f}, "
             f"phase={self.gait_planner.phase:.3f}, "
             f"max_leg_error={max_leg_error:.4f}"
             f"({JOINT_ORDER[max_leg_error_index]}), "

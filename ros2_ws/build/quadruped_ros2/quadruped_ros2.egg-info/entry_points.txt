@@ -1,5 +1,8 @@
 [console_scripts]
+analyze_joint_log = quadruped_ros2.analyze_joint_log:main
 joint_monitor = quadruped_ros2.joint_monitor:main
+joint_plotter = quadruped_ros2.joint_plotter:main
+odem_tracker = quadruped_ros2.odem_tracker:main
 pose_commander = quadruped_ros2.pose_commander:main
 quadruped_main = quadruped_ros2.main:main
 

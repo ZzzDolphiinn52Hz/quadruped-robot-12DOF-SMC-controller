@@ -50,34 +50,42 @@ class RobotConfig:
     L1: float = 0.16
     L2: float = 0.16
 
+    # Simple dynamics feed-forward parameters, matched to the Webots model.
+    body_mass: float = 1.0
+    thigh_mass: float = 0.12
+    shank_mass: float = 0.08
+    gravity: float = 9.81
+    support_force_scale: float = 1.0
+
     # Vị trí bàn chân home
     z_home: float = -0.22
 
     # Gait parameters
-    gait_period: float = 1.60
-    duty_factor: float = 0.78
-    step_height: float = 0.008
-    min_step_length: float = 0.006
-    max_step_length: float = 0.018
+    gait_period: float = 0.80
+    duty_factor: float = 0.5
+    step_height: float = 0.04
+    min_step_length: float = 0.02
+    max_step_length: float = 0.08
     step_length_gain: float = 0.80
 
     # Joint limits
     hip_pitch_min: float = -1.57
     hip_pitch_max: float = 1.57
     knee_pitch_min: float = -2.20
-    knee_pitch_max: float = 0.20
+    #knee_pitch_max: float = 1.60
+    knee_pitch_max: float = 0.2
     hip_yaw_min: float = -0.80
     hip_yaw_max: float = 0.80
 
     # Watchdog
-    cmd_timeout: float = 0.50
+    cmd_timeout: float = 5.0
     
-    startup_hold_time: float = 1.0
+    startup_hold_time: float = 0.5
     small_stand_fraction: float = 0.20
-    small_stand_ramp_time: float = 2.0
-    small_stand_hold_time: float = 2.0
+    small_stand_ramp_time: float = 1.0
+    small_stand_hold_time: float = 0.5
     full_stand_enabled: bool = True
-    full_stand_ramp_time: float = 3.0
+    full_stand_ramp_time: float = 1.5
 
     # Control loop
     control_period: float = 0.02
@@ -86,20 +94,20 @@ class RobotConfig:
     forward_sign: float = 1.0
 
     # Sliding Mode Controller for hip/knee effort tracking
-    smc_lambda_yaw: float = 7.0
-    smc_lambda_hip: float = 10.0
-    smc_lambda_knee: float = 10.0
+    smc_lambda_yaw: float = 6.0
+    smc_lambda_hip: float = 12.0
+    smc_lambda_knee: float = 18.0
 
     smc_linear_gain_yaw: float = 0.0
-    smc_linear_gain_hip: float = 0.0
-    smc_linear_gain_knee: float = 0.0
+    smc_linear_gain_hip: float = 0.45
+    smc_linear_gain_knee: float = 0.45
 
     smc_switching_gain_yaw: float = 0.40
-    smc_switching_gain_hip: float = 2.50
-    smc_switching_gain_knee: float = 2.50
+    smc_switching_gain_hip: float = 0.05
+    smc_switching_gain_knee: float = 0.05
 
     # Boundary layer width for sat(s / phi). Increase to reduce chattering.
-    smc_boundary_layer: float = 2.0
+    smc_boundary_layer: float = 10.0
 
     # Small desired acceleration feed-forward. Keep conservative without a
     # full rigid-body dynamics model.
@@ -108,22 +116,22 @@ class RobotConfig:
     smc_inertia_knee: float = 0.008
 
     # Giới hạn torque
-    effort_limit: float = 3.80
-    effort_rate_limit: float = 3.80
+    effort_limit: float = 2.00
+    effort_rate_limit: float = 0.60
     yaw_effort_limit: float = 0.45
 
     # Giới hạn error để tránh torque spike
     position_error_limit: float = 0.70
-    velocity_error_limit: float = 1.50
+    velocity_error_limit: float = 5.00
     desired_acceleration_limit: float = 5.0
 
     # Torque hỗ trợ giữ thân trong stance. Keep disabled while tuning the
     # small first stand pose.
-    use_support_torque: bool = False
-    hip_support_torque: float = 0.12
-    knee_support_torque: float = 0.45
+    use_support_torque: bool = True
+    hip_support_torque: float = 0.0
+    knee_support_torque: float = 0.0
 
     # Nếu joint chạy ngược chiều qd, đổi riêng sign của nhóm joint đó.
-    yaw_effort_sign: float = -1.0
+    yaw_effort_sign: float = 1.0
     hip_effort_sign: float = 1.0
     knee_effort_sign: float = 1.0
